@@ -1,0 +1,101 @@
+version: 1.2.1
+cache: true
+interface:
+  customWelcome: "Hey {{user.name}}! Welcome to Hermes — your AI command centre."
+  presets: true
+  prompts:
+    use: true
+    create: true
+  agents:
+    use: true
+    create: true
+  bookmarks: true
+  multiConvo: true
+  endpointsMenu: true
+  modelSelect: true
+  parameters: true
+  sidePanel: true
+modelSpecs:
+  enforce: false
+  prioritize: true
+  list:
+    - name: "jarvis"
+      label: "Jarvis — Chief of Staff"
+      description: "Command centre operator. Daily briefings, task routing, escalation."
+      preset:
+        endpoint: "Hermes (OVH V100)"
+        model: "ollama/Hermes-4-14B.Q4_K_M.gguf"
+        temperature: 0.7
+        modelLabel: "Jarvis"
+        greeting: "I am Jarvis, your chief of staff."
+        promptPrefix: "You are Jarvis, the Command Centre Operator. Be direct, concise, action-oriented."
+    - name: "olympus"
+      label: "Olympus — Strategist"
+      description: "Research, planning, drafting, long-form analysis."
+      preset:
+        endpoint: "Hermes (OVH V100)"
+        model: "ollama/Hermes-4-14B.Q4_K_M.gguf"
+        temperature: 0.7
+        modelLabel: "Olympus"
+        greeting: "I am Olympus. Give me a problem to think through."
+        promptPrefix: "You are Olympus, the Strategy Specialist. Research before concluding. Plans must be executable."
+endpoints:
+  custom:
+    - name: "Hermes (OVH V100)"
+      apiKey: "${BIFROST_KEY}"
+      baseURL: "https://llm.fininspire.ca/v1"
+      models:
+        default: ["ollama/Hermes-4-14B.Q4_K_M.gguf"]
+        fetch: false
+      titleConvo: true
+      titleModel: "ollama/Hermes-4-14B.Q4_K_M.gguf"
+      dropParams: ["stop"]
+      modelDisplayLabel: "Hermes"
+    - name: "Groq"
+      apiKey: "${GROQ_API_KEY}"
+      baseURL: "https://api.groq.com/openai/v1"
+      models:
+        default: ["llama-3.3-70b-versatile"]
+        fetch: true
+      titleConvo: true
+      modelDisplayLabel: "Groq"
+    - name: "DeepSeek"
+      apiKey: "${DEEPSEEK_API_KEY}"
+      baseURL: "https://api.deepseek.com/v1"
+      models:
+        default: ["deepseek-chat", "deepseek-reasoner"]
+        fetch: false
+      titleConvo: true
+      modelDisplayLabel: "DeepSeek"
+    - name: "DashScope (Qwen)"
+      apiKey: "${DASHSCOPE_API_KEY}"
+      baseURL: "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+      models:
+        default: ["qwen-max", "qwen-plus"]
+        fetch: false
+      titleConvo: true
+      modelDisplayLabel: "Qwen"
+    - name: "Cerebras"
+      apiKey: "${CEREBRAS_API_KEY}"
+      baseURL: "https://api.cerebras.ai/v1"
+      models:
+        default: ["llama-3.3-70b"]
+        fetch: true
+      titleConvo: true
+      modelDisplayLabel: "Cerebras"
+    - name: "OpenRouter"
+      apiKey: "${OPENROUTER_API_KEY}"
+      baseURL: "https://openrouter.ai/api/v1"
+      models:
+        default: ["qwen/qwen-2.5-72b-instruct"]
+        fetch: true
+      titleConvo: true
+      modelDisplayLabel: "OpenRouter"
+    - name: "Mistral"
+      apiKey: "${MISTRAL_API_KEY}"
+      baseURL: "https://api.mistral.ai/v1"
+      models:
+        default: ["mistral-large-latest", "codestral-latest"]
+        fetch: true
+      titleConvo: true
+      modelDisplayLabel: "Mistral"
