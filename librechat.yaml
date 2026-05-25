@@ -20,15 +20,15 @@ modelSpecs:
   enforce: false
   prioritize: true
   list:
-    - name: "chairman"
-      label: "Chairman — Master Orchestrator"
+    - name: "olympus"
+      label: "Olympus — Master Orchestrator"
       description: "Blake Moran problem-solver. Default. Takes orders, gets them done."
       preset:
         endpoint: "Hermes Bridge"
-        model: "chairman"
+        model: "olympus"
         temperature: 0.3
-        modelLabel: "Chairman"
-        greeting: "On it. What do you need?"
+        modelLabel: "Olympus"
+        greeting: "What do you need?"
     - name: "planner"
       label: "Planner (Olympus) — Sprint plans + roadmaps"
       preset: { endpoint: "Hermes Bridge", model: "planner", temperature: 0.3, modelLabel: "Planner" }
@@ -82,7 +82,7 @@ endpoints:
       baseURL: "https://llm.fininspire.ca/v1"
       models:
         default:
-          - "chairman"
+          - "olympus"
           - "planner"
           - "architect"
           - "code-reviewer"
@@ -102,6 +102,6 @@ endpoints:
           - "hermes-jarvis"
         fetch: false
       titleConvo: true
-      titleModel: "chairman"
+      titleModel: "olympus"
       modelDisplayLabel: "Hermes"
       iconURL: "https://llm.fininspire.ca/favicon.ico"
