@@ -1,7 +1,7 @@
 version: 1.2.1
 cache: true
 interface:
-  customWelcome: "Hey {{user.name}}! Welcome to Hermes — your AI command centre."
+  customWelcome: "Hey {{user.name}} — your IGNITE Command Centre. Pick a persona below."
   presets: true
   prompts:
     use: true
@@ -15,87 +15,93 @@ interface:
   modelSelect: true
   parameters: true
   sidePanel: true
+
 modelSpecs:
   enforce: false
   prioritize: true
   list:
-    - name: "jarvis"
-      label: "Jarvis — Chief of Staff"
-      description: "Command centre operator. Daily briefings, task routing, escalation."
+    - name: "chairman"
+      label: "Chairman — Master Orchestrator"
+      description: "Blake Moran problem-solver. Default. Takes orders, gets them done."
       preset:
-        endpoint: "Hermes (OVH V100)"
-        model: "ollama/Hermes-4-14B.Q4_K_M.gguf"
-        temperature: 0.7
-        modelLabel: "Jarvis"
-        greeting: "I am Jarvis, your chief of staff."
-        promptPrefix: "You are Jarvis, the Command Centre Operator. Be direct, concise, action-oriented."
-    - name: "olympus"
-      label: "Olympus — Strategist"
-      description: "Research, planning, drafting, long-form analysis."
-      preset:
-        endpoint: "Hermes (OVH V100)"
-        model: "ollama/Hermes-4-14B.Q4_K_M.gguf"
-        temperature: 0.7
-        modelLabel: "Olympus"
-        greeting: "I am Olympus. Give me a problem to think through."
-        promptPrefix: "You are Olympus, the Strategy Specialist. Research before concluding. Plans must be executable."
+        endpoint: "Hermes Bridge"
+        model: "chairman"
+        temperature: 0.3
+        modelLabel: "Chairman"
+        greeting: "On it. What do you need?"
+    - name: "planner"
+      label: "Planner (Olympus) — Sprint plans + roadmaps"
+      preset: { endpoint: "Hermes Bridge", model: "planner", temperature: 0.3, modelLabel: "Planner" }
+    - name: "architect"
+      label: "Architect (Olympus) — System design + ADRs"
+      preset: { endpoint: "Hermes Bridge", model: "architect", temperature: 0.3, modelLabel: "Architect" }
+    - name: "code-reviewer"
+      label: "Code Reviewer (Olympus) — Python/React review"
+      preset: { endpoint: "Hermes Bridge", model: "code-reviewer", temperature: 0.3, modelLabel: "CodeReviewer" }
+    - name: "security-reviewer"
+      label: "Security (Olympus) — OWASP/STRIDE/Canadian compliance"
+      preset: { endpoint: "Hermes Bridge", model: "security-reviewer", temperature: 0.3, modelLabel: "Security" }
+    - name: "tdd-guide"
+      label: "TDD Guide (Olympus) — Test specs + acceptance criteria"
+      preset: { endpoint: "Hermes Bridge", model: "tdd-guide", temperature: 0.3, modelLabel: "TDD" }
+    - name: "database-reviewer"
+      label: "Database Reviewer (Olympus) — Postgres/SQLite review"
+      preset: { endpoint: "Hermes Bridge", model: "database-reviewer", temperature: 0.3, modelLabel: "DBReviewer" }
+    - name: "researcher"
+      label: "Researcher (Jarvis) — Canadian fintech market intel"
+      preset: { endpoint: "Hermes Bridge", model: "researcher", temperature: 0.3, modelLabel: "Researcher" }
+    - name: "product-strategist"
+      label: "Product Strategist (Jarvis) — Roadmaps + OKRs"
+      preset: { endpoint: "Hermes Bridge", model: "product-strategist", temperature: 0.3, modelLabel: "Product" }
+    - name: "copywriting"
+      label: "Copywriting (Jarvis) — LinkedIn, proposals, emails"
+      preset: { endpoint: "Hermes Bridge", model: "copywriting", temperature: 0.3, modelLabel: "Copy" }
+    - name: "seo-geo-aeo-strategist"
+      label: "SEO / GEO / AEO (Jarvis) — Search + AI search visibility"
+      preset: { endpoint: "Hermes Bridge", model: "seo-geo-aeo-strategist", temperature: 0.3, modelLabel: "SEO" }
+    - name: "financial-accountant"
+      label: "Financial Accountant (Jarvis) — Cost models + Canadian tax"
+      preset: { endpoint: "Hermes Bridge", model: "financial-accountant", temperature: 0.3, modelLabel: "Finance" }
+    - name: "crm-manager"
+      label: "CRM Manager (Jarvis) — Pipeline + lead scoring"
+      preset: { endpoint: "Hermes Bridge", model: "crm-manager", temperature: 0.3, modelLabel: "CRM" }
+    - name: "web-designer"
+      label: "Web Designer (Jarvis) — Page specs + wireframes"
+      preset: { endpoint: "Hermes Bridge", model: "web-designer", temperature: 0.3, modelLabel: "Designer" }
+    - name: "storyteller"
+      label: "Storyteller (Jarvis) — Pitch decks + case studies"
+      preset: { endpoint: "Hermes Bridge", model: "storyteller", temperature: 0.3, modelLabel: "Storyteller" }
+    - name: "contract-legal"
+      label: "Contract & Legal (Jarvis) — Ontario contracts (NOT legal advice)"
+      preset: { endpoint: "Hermes Bridge", model: "contract-legal", temperature: 0.3, modelLabel: "Legal" }
+
 endpoints:
   custom:
-    - name: "Hermes (OVH V100)"
+    - name: "Hermes Bridge"
       apiKey: "${BIFROST_KEY}"
       baseURL: "https://llm.fininspire.ca/v1"
       models:
-        default: ["ollama/Hermes-4-14B.Q4_K_M.gguf"]
+        default:
+          - "chairman"
+          - "planner"
+          - "architect"
+          - "code-reviewer"
+          - "security-reviewer"
+          - "tdd-guide"
+          - "database-reviewer"
+          - "researcher"
+          - "product-strategist"
+          - "copywriting"
+          - "seo-geo-aeo-strategist"
+          - "financial-accountant"
+          - "crm-manager"
+          - "web-designer"
+          - "storyteller"
+          - "contract-legal"
+          - "hermes-olympus"
+          - "hermes-jarvis"
         fetch: false
       titleConvo: true
-      titleModel: "ollama/Hermes-4-14B.Q4_K_M.gguf"
-      dropParams: ["stop"]
+      titleModel: "chairman"
       modelDisplayLabel: "Hermes"
-    - name: "Groq"
-      apiKey: "${GROQ_API_KEY}"
-      baseURL: "https://api.groq.com/openai/v1"
-      models:
-        default: ["llama-3.3-70b-versatile"]
-        fetch: true
-      titleConvo: true
-      modelDisplayLabel: "Groq"
-    - name: "DeepSeek"
-      apiKey: "${DEEPSEEK_API_KEY}"
-      baseURL: "https://api.deepseek.com/v1"
-      models:
-        default: ["deepseek-chat", "deepseek-reasoner"]
-        fetch: false
-      titleConvo: true
-      modelDisplayLabel: "DeepSeek"
-    - name: "DashScope (Qwen)"
-      apiKey: "${DASHSCOPE_API_KEY}"
-      baseURL: "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
-      models:
-        default: ["qwen-max", "qwen-plus"]
-        fetch: false
-      titleConvo: true
-      modelDisplayLabel: "Qwen"
-    - name: "Cerebras"
-      apiKey: "${CEREBRAS_API_KEY}"
-      baseURL: "https://api.cerebras.ai/v1"
-      models:
-        default: ["llama-3.3-70b"]
-        fetch: true
-      titleConvo: true
-      modelDisplayLabel: "Cerebras"
-    - name: "OpenRouter"
-      apiKey: "${OPENROUTER_API_KEY}"
-      baseURL: "https://openrouter.ai/api/v1"
-      models:
-        default: ["qwen/qwen-2.5-72b-instruct"]
-        fetch: true
-      titleConvo: true
-      modelDisplayLabel: "OpenRouter"
-    - name: "Mistral"
-      apiKey: "${MISTRAL_API_KEY}"
-      baseURL: "https://api.mistral.ai/v1"
-      models:
-        default: ["mistral-large-latest", "codestral-latest"]
-        fetch: true
-      titleConvo: true
-      modelDisplayLabel: "Mistral"
+      iconURL: "https://llm.fininspire.ca/favicon.ico"
